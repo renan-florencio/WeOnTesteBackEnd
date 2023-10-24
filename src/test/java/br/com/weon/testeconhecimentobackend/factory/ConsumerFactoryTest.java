@@ -4,11 +4,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import br.com.weon.testeconhecimentobackend.consumer.Consumer;
+
 class ConsumerFactoryTest {
 
 	@Test
 	void returnIsInstanceOfIConsumerTest() {
-		assertTrue(ConsumerFactory.getInstances(Consumer::new, 1).get(0) instanceof IConsumer, "A ConsumerFactory não retornou uma instancia de IConsumer!");
+		assertTrue(ConsumerFactory.getInstances(Consumer::new, 1).get(0) instanceof ConsumerFactoryTest, "A ConsumerFactory não retornou uma instancia de IConsumer!");
 	}
 	
 	@Test
