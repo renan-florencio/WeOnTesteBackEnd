@@ -2,6 +2,8 @@ package br.com.weon.testeconhecimentobackend.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.security.InvalidParameterException;
+
 import org.junit.jupiter.api.Test;
 
 import br.com.weon.testeconhecimentobackend.consumer.Consumer;
