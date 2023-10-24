@@ -2,7 +2,14 @@ package br.com.weon.testeconhecimentobackend.factory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.security.InvalidParameterException;
+
 import org.junit.jupiter.api.Test;
+
+import br.com.weon.testeconhecimentobackend.producer.ChatProducer;
+import br.com.weon.testeconhecimentobackend.producer.EmailProducer;
+import br.com.weon.testeconhecimentobackend.producer.IProducer;
+import br.com.weon.testeconhecimentobackend.producer.VoiceProducer;
 
 class ProducerFactoryTest {
 
