@@ -9,6 +9,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+/*
+ * Modelo de entidade Chat
+ */
+
+
 @Entity
 public class Voice extends AbstractChannel{
 	

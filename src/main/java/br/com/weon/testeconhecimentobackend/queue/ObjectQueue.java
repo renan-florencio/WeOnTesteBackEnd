@@ -5,6 +5,10 @@ import java.util.Queue;
 
 import br.com.weon.testeconhecimentobackend.model.AbstractChannel;
 
+/*
+ * Implementação de fila de objetos
+ */
+
 public class ObjectQueue {
 	
 	private static ObjectQueue INSTANCE;
@@ -13,11 +17,17 @@ public class ObjectQueue {
 	
 	private Queue<AbstractChannel> queue = new LinkedList<AbstractChannel>();
 	
+	/*
+	 * Método para adicionar objeto na fila
+	 */
 	public synchronized void add(AbstractChannel channel) {
 		queue.add(channel);
 		this.producedObjects ++;
 	}
 	
+	/*
+	 * Método para obter objeto da fila
+	 */
 	public synchronized AbstractChannel get() {
 		AbstractChannel channel  = queue.poll();
 		
@@ -27,10 +37,16 @@ public class ObjectQueue {
 		return channel;
 	}
 	
+	/*
+	 * Método para obter tamanho da fila
+	 */
 	public synchronized int size() {
 		return this.queue.size();
 	}
 	
+	/*
+	 * Método para verificar se fila está vazia
+	 */
 	public synchronized boolean queueIsEmpty() {
 		
 		if (this.consumedObjects != 0 && size() == 0
@@ -40,6 +56,9 @@ public class ObjectQueue {
 		return false;
 	}
 	
+	/*
+	 * Método para obter instancia da fila
+	 */
 	public static ObjectQueue getInstance() {
 		
 		if (INSTANCE == null) {

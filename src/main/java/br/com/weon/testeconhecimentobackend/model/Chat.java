@@ -5,6 +5,10 @@ import java.util.UUID;
 
 import jakarta.persistence.*;
 
+/*
+ * Modelo de entidade Chat
+ */
+
 @Entity
 public class Chat extends AbstractChannel {
 	

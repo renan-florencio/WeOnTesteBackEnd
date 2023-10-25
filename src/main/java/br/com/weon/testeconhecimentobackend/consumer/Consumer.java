@@ -4,7 +4,11 @@ import br.com.weon.testeconhecimentobackend.model.AbstractChannel;
 import br.com.weon.testeconhecimentobackend.queue.ObjectQueue;
 
 public class Consumer implements IConsumer {
-
+	
+	/*
+	 * Implementação de método consumeMessage de IConsumer
+	 * Realiza a obtenção de objeto na fila
+	 */
 	@Override
 	public void consumeMessage() {
 		
@@ -15,6 +19,10 @@ public class Consumer implements IConsumer {
 		}
 	}
 
+	/*
+	 * Implementação de método run de Runnable
+	 * Realiza verificação em fila e chama o método de consumo caso a fila possua objetos
+	 */
 	@Override
 	public void run() {
 		

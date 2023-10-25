@@ -8,9 +8,18 @@ import br.com.weon.testeconhecimentobackend.dao.EmailDAOImpl;
 import br.com.weon.testeconhecimentobackend.model.Email;
 import br.com.weon.testeconhecimentobackend.queue.ObjectQueue;
 
+/*
+ * Produtor de mensagens do tipo Email
+ */
+
 public class EmailProducer implements IProducer{
 	
 	private int messageNumber = 1;
+	
+	/*
+	 * Implementação de método produceMessage de IProducer
+	 * Realiza a inserção de objetos na fila e sua persistencia no banco de dados
+	 */
 	
 	@Override
 	public void produceMessage() {
@@ -23,6 +32,11 @@ public class EmailProducer implements IProducer{
 		messageNumber++;
 	}
 
+	/*
+	 * Implementação de método run de Runnable
+	 * Realiza a obtenção da configuração de timeout e execução de método de produção de mensagem
+	 */
+	
 	@Override
 	public void run() {
 		try {

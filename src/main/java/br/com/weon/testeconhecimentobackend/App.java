@@ -15,8 +15,9 @@ import br.com.weon.testeconhecimentobackend.producer.IProducer;
 import br.com.weon.testeconhecimentobackend.producer.VoiceProducer;
 import br.com.weon.testeconhecimentobackend.queue.ObjectQueue;
 import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
-
-
+/*
+ * @Author Renan Florencio de Oliveira
+ */
 public class App 
 {
     public static void main( String[] args )
