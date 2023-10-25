@@ -15,23 +15,29 @@ public class ObjectQueue {
 	
 	public synchronized void add(AbstractChannel channel) {
 		queue.add(channel);
-		System.out.println("Adicionado: "+channel);
 		this.producedObjects ++;
 	}
 	
 	public synchronized AbstractChannel get() {
-		AbstractChannel channel  = queue.peek();
-		remove(channel);
+		AbstractChannel channel  = queue.poll();
+		
+		if (channel != null) {
+			this.consumedObjects ++;
+		}
 		return channel;
-	}
-	
-	public synchronized void remove(AbstractChannel channel) {
-		queue.remove(channel);
-		this.consumedObjects ++;
 	}
 	
 	public synchronized int size() {
 		return this.queue.size();
+	}
+	
+	public synchronized boolean queueIsEmpty() {
+		
+		if (this.consumedObjects != 0 && size() == 0
+				&& this.consumedObjects == this.producedObjects) {
+			return true;
+		}
+		return false;
 	}
 	
 	public static ObjectQueue getInstance() {

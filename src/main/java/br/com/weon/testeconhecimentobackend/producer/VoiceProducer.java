@@ -26,7 +26,6 @@ public class VoiceProducer implements IProducer{
 	@Override
 	public void run() {
 		try {
-			Config.loadProperties().get("producers.timeout");
 			long timeout = System.currentTimeMillis() + Long.parseLong(Config.loadProperties().getProperty("producers.timeout")) * 1000;
 			
 			while(System.currentTimeMillis() < timeout) {

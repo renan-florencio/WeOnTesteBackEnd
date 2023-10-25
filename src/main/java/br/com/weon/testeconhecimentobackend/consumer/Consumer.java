@@ -18,15 +18,9 @@ public class Consumer implements IConsumer {
 	@Override
 	public void run() {
 		
-		if (ObjectQueue.getInstance().size() > 0 ) {
-			while (ObjectQueue.getInstance().size() > 0) {
-				this.consumeMessage();
-			}
+		while (ObjectQueue.getInstance().queueIsEmpty() == false) {
+			this.consumeMessage();
 		}
-		else {
-			System.out.println("Não há objetos na fila para serem consumidos!");
-		}
-		
 	}
 
 }
