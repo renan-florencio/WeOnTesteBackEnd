@@ -12,11 +12,23 @@ public class EntityManagerSingleton {
 
 	}
 
-	public static EntityManager getInstance(){
+	public static synchronized EntityManager getInstance(){
 		if(entityManager == null){
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ConexaoDB");
 			entityManager = entityManagerFactory.createEntityManager();
 		}
 		return entityManager;
+	}
+	
+	public static synchronized void save(Object obj) {
+		entityManager.getTransaction().begin();
+		entityManager.persist(obj);
+		entityManager.getTransaction().commit();
+	}
+	
+	public static synchronized void remove(Object obj) {
+		entityManager.getTransaction().begin();
+		entityManager.remove(obj);
+		entityManager.getTransaction().commit();
 	}
 }

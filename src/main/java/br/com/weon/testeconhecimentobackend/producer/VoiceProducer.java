@@ -25,9 +25,9 @@ public class VoiceProducer implements IProducer{
 	public void produceMessage() {
 		
 		Voice voice = new Voice("Origem "+messageNumber+" "+this.getClass().getName(), "Destino"+messageNumber, LocalDateTime.now());
+		ObjectQueue.getInstance().add(voice);
 		VoiceDAOImpl dao = new VoiceDAOImpl();
 		dao.save(voice);
-		ObjectQueue.getInstance().add(voice);
 		
 		messageNumber++;
 	}

@@ -25,9 +25,9 @@ public class EmailProducer implements IProducer{
 	public void produceMessage() {
 		
 		Email email = new Email("Origem "+messageNumber+" "+this.getClass().getName(), "Destino"+messageNumber, LocalDateTime.now());
+		ObjectQueue.getInstance().add(email);
 		EmailDAOImpl dao = new EmailDAOImpl();
 		dao.save(email);
-		ObjectQueue.getInstance().add(email);
 		
 		messageNumber++;
 	}

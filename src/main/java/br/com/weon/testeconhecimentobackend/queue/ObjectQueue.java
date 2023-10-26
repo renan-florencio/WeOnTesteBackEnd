@@ -29,12 +29,14 @@ public class ObjectQueue {
 	 * Método para obter objeto da fila
 	 */
 	public synchronized AbstractChannel get() {
-		AbstractChannel channel  = queue.poll();
 		
+		AbstractChannel channel  = queue.poll();
+			
 		if (channel != null) {
 			this.consumedObjects ++;
 		}
 		return channel;
+
 	}
 	
 	/*
@@ -59,7 +61,7 @@ public class ObjectQueue {
 	/*
 	 * Método para obter instancia da fila
 	 */
-	public static ObjectQueue getInstance() {
+	public static synchronized ObjectQueue getInstance() {
 		
 		if (INSTANCE == null) {
 			INSTANCE = new ObjectQueue();

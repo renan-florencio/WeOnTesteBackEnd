@@ -25,9 +25,9 @@ public class ChatProducer implements IProducer {
 	public void produceMessage() {
 		
 		Chat chat = new Chat("Origem "+messageNumber+" "+this.getClass().getName(), "Destino "+messageNumber, LocalDateTime.now());
+		ObjectQueue.getInstance().add(chat);
 		ChatDAOImpl dao = new ChatDAOImpl();
 		dao.save(chat);
-		ObjectQueue.getInstance().add(chat);
 		
 		messageNumber++;
 	}
