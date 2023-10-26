@@ -18,8 +18,9 @@ public class FabricaConsumidor {
 	 * {@summary FabricaConsumidor.fabricarConsumidor()}
 	 * @param quantidade - Quantidade de instancias a serem criadas
 	 * @return List<{@link IConsumidor} - Lista de consumidores
+	 * @throws InvalidParameterException - Lançada caso o parâmetro quantidade seja <= 0
 	 */
-	public static List<? extends IConsumidor> fabricarConsumidor(int quantidade){
+	public static List<? extends IConsumidor> fabricarConsumidor(int quantidade) throws InvalidParameterException{
 		if (quantidade <= 0) {
 			throw new InvalidParameterException("Não é possível criar "
 					+ quantidade+" instancias de IConsumidor");
