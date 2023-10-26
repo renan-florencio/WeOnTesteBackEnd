@@ -5,10 +5,10 @@ import java.util.Queue;
 
 import br.com.weon.testeconhecimentobackend.model.AbstractChannel;
 
-/*
- * Implementação de fila de objetos
+/**
+ * {@summary ObjectQueue}
+ * Fila de objetos do tipo FIFO
  */
-
 public class ObjectQueue {
 	
 	private static ObjectQueue INSTANCE;
@@ -17,16 +17,22 @@ public class ObjectQueue {
 	
 	private Queue<AbstractChannel> queue = new LinkedList<AbstractChannel>();
 	
-	/*
+	/**
+	 * {@summary ObjectQueue.add(AbstractChannel channel)}
 	 * Método para adicionar objeto na fila
+	 * 
+	 * @param channel : {@link AbstractChannel}
 	 */
 	public synchronized void add(AbstractChannel channel) {
 		queue.add(channel);
 		this.producedObjects ++;
 	}
 	
-	/*
+	/**
+	 * {@summary ObjectQueue.get()}
 	 * Método para obter objeto da fila
+	 * 
+	 * @return {@link AbstractChannel}
 	 */
 	public synchronized AbstractChannel get() {
 		
@@ -39,15 +45,21 @@ public class ObjectQueue {
 
 	}
 	
-	/*
+	/**
+	 * {@summary ObjectQueue.size()}
 	 * Método para obter tamanho da fila
+	 * 
+	 * @return int
 	 */
 	public synchronized int size() {
 		return this.queue.size();
 	}
 	
-	/*
+	/**
+	 * {@summary ObjectQueue.queueIsEmpty()}
 	 * Método para verificar se fila está vazia
+	 * 
+	 * @return boolean
 	 */
 	public synchronized boolean queueIsEmpty() {
 		
@@ -58,8 +70,11 @@ public class ObjectQueue {
 		return false;
 	}
 	
-	/*
-	 * Método para obter instancia da fila
+	/**
+	 * {@summary ObjectQueue.getInstance()}
+	 * Método estático para obter instancia da fila
+	 * 
+	 * @return {@link ObjectQueue}
 	 */
 	public static synchronized ObjectQueue getInstance() {
 		

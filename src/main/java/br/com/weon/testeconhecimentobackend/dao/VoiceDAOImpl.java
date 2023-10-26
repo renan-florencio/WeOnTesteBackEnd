@@ -4,16 +4,18 @@ import br.com.weon.testeconhecimentobackend.model.Voice;
 import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
 import jakarta.transaction.Transactional;
 
-/*
+/**
+ * {@summary VoiceDAOImpl}
  * Implementação de DAO para Email
  */
 public class VoiceDAOImpl implements IVoiceDAO {
 
-	/*
-	 * Método save Recebe um objeto Voice e realiza a persistencia do mesmo no banco
+	/**
+	 * {@summary VoiceDAOImpl.save(Voice voice)}
+	 * Método save
+	 * <br>Recebe um objeto Voice e realiza a persistencia do mesmo no banco
 	 * de dados
-	 * 
-	 * @Param Voice
+	 *
 	 */
 	@Override
 	@Transactional
@@ -21,11 +23,11 @@ public class VoiceDAOImpl implements IVoiceDAO {
 		EntityManagerSingleton.save(voice);
 	}
 
-	/*
-	 * Método delete Recebe um objeto Voice e realiza a remoção do mesmo no banco de
+	/**
+	 * {@summary VoiceDAOImpl.delete(Voice voice)}
+	 * Método delete
+	 * <br>Recebe um objeto Voice e realiza a remoção do mesmo no banco de
 	 * dados
-	 * 
-	 * @Param Voice
 	 */
 	@Override
 	@Transactional

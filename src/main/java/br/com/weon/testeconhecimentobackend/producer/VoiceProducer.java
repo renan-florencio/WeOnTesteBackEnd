@@ -8,7 +8,8 @@ import br.com.weon.testeconhecimentobackend.dao.VoiceDAOImpl;
 import br.com.weon.testeconhecimentobackend.model.Voice;
 import br.com.weon.testeconhecimentobackend.queue.ObjectQueue;
 
-/*
+/**
+ * {@summary VoiceProducer}
  * Produtor de mensagens do tipo Voice
  */
 
@@ -16,9 +17,10 @@ public class VoiceProducer implements IProducer{
 
 	private int messageNumber = 1;
 	
-	/*
+	/**
+	 * {@summary VoiceProducer.produceMessage()}
 	 * Implementação de método produceMessage de IProducer
-	 * Realiza a inserção de objetos na fila e sua persistencia no banco de dados
+	 * <br>Realiza a inserção de objetos na fila e sua persistencia no banco de dados
 	 */
 	
 	@Override
@@ -32,9 +34,10 @@ public class VoiceProducer implements IProducer{
 		messageNumber++;
 	}
 	
-	/*
+	/**
+	 * {@summary VoiceProducer.run()}
 	 * Implementação de método run de Runnable
-	 * Realiza a obtenção da configuração de timeout e execução de método de produção de mensagem
+	 * <br>Realiza a obtenção da configuração de timeout e execução de método de produção de mensagem
 	 */
 
 	@Override

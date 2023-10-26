@@ -6,18 +6,21 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 import br.com.weon.testeconhecimentobackend.consumer.IConsumer;
-/*
+/**
+ * {@summary ConsumerFactory}
  * Fábrica de objetos Consumer
  */
 public class ConsumerFactory {
 	
-	/*
-	 * Realiza a criação de objetos Consumer
+	/**
+	 * {@summary ConsumerFactory.getInstances(Supplier<IConsumer> consumer,int quantity)}
+	 * Método fábrica que realiza a criação de objetos Consumer
 	 * 
-	 * @Param Supplier<IConsumer> consumer -> Supplier para criação do objeto "Objeto::new"
-	 * @Param int quantity -> Quantidade de objetos a serem criados
+	 * @param consumer : Supplier<IConsumer> (Consumer::new) -> Recebe supplier para instanciação de consumer
+	 * @param quantity : int -> Recebe quantidade de instâncias a serem criadas
 	 * 
-	 * @Return List<IConsumer>
+	 * @return List<{@link IConsumer}>
+	 * @throws InvalidParameterException 
 	 */
 	public static List<IConsumer> getInstances(Supplier<IConsumer> consumer,int quantity) throws InvalidParameterException{
 		

@@ -7,19 +7,22 @@ import java.util.stream.Stream;
 
 import br.com.weon.testeconhecimentobackend.producer.IProducer;
 
-/*
+/**
+ * {@summary ProducerFactory}
  * Fábrica de objetos Producer
  */
 public class ProducerFactory {
 
 	
-	/*
+	/**
+	 * {@summary ProducerFactory.getInstances(Supplier<IProducer> producer,int quantity)}
 	 * Realiza a criação de objetos Consumer
 	 * 
-	 * @Param Supplier<IProducer> producer -> Supplier para criação do objeto "Objeto::new"
-	 * @Param int quantity -> Quantidade de objetos a serem criados
+	 * @param producer : Supplier<IProducer>  -> Supplier para criação do objeto "Objeto::new"
+	 * @param quantity : int  -> Quantidade de objetos a serem criados
 	 * 
-	 * @Return List<IProducer>
+	 * @return List<{@link IProducer}>
+	 * @throws InvalidParameterException
 	 */
 	public static List<IProducer> getInstances(Supplier<IProducer> producer,int quantity) throws InvalidParameterException{
 		

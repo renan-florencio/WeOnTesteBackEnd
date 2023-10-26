@@ -4,16 +4,16 @@ import br.com.weon.testeconhecimentobackend.model.Chat;
 import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
 import jakarta.transaction.Transactional;
 
-/*
- * Implementação de DAO para Chat
+/**
+ * {@summary ChatDAOImpl}
+ * Implementação de DAO para classe Chat
  */
 public class ChatDAOImpl implements IChatDAO {
 	
-	/*
+	/**
+	 * {@summary ChatDAOImpl.save(Chat chat)}
 	 * Método save
-	 * Recebe um objeto Chat e realiza a persistencia do mesmo no banco de dados
-	 * 
-	 * @Param Chat 
+	 * <br>Recebe um objeto Chat e realiza a persistencia do mesmo no banco de dados
 	 */
 	@Override
 	@Transactional
@@ -21,9 +21,10 @@ public class ChatDAOImpl implements IChatDAO {
 		EntityManagerSingleton.save(chat);
 	}
 
-	/*
+	/**
+	 * {@summary ChatDAOImpl.delete(Chat chat)}
 	 * Método delete
-	 * Recebe um objeto Chat e realiza a remoção do mesmo no banco de dados
+	 * <br>Recebe um objeto Chat e realiza a remoção do mesmo no banco de dados
 	 * 
 	 * @Param Chat 
 	 */
