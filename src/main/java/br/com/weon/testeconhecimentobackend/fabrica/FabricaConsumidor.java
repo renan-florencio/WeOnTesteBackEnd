@@ -10,7 +10,7 @@ import br.com.weon.testeconhecimentobackend.consumidor.IConsumidor;
 
 /**
  * {@summary FabricaConsumidor}
- * Classe de fábrica responsável por retornar instancias de Consumidor
+ * Classe de fábrica responsável por retornar instancias de IConsumidor
  */
 public class FabricaConsumidor {
 
