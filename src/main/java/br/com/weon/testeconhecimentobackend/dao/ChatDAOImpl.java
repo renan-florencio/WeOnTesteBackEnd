@@ -26,7 +26,7 @@ public class ChatDAOImpl implements IChatDAO {
 	 * Método delete
 	 * <br>Recebe um objeto Chat e realiza a remoção do mesmo no banco de dados
 	 * 
-	 * @Param Chat 
+	 * @param chat 
 	 */
 	@Override
 	@Transactional

@@ -16,7 +16,7 @@ public class ConsumerFactory {
 	 * {@summary ConsumerFactory.getInstances(Supplier<IConsumer> consumer,int quantity)}
 	 * Método fábrica que realiza a criação de objetos Consumer
 	 * 
-	 * @param consumer : Supplier<IConsumer> (Consumer::new) -> Recebe supplier para instanciação de consumer
+	 * @param consumer : Supplier<{@link IConsumer}> (Consumer::new) -> Recebe supplier para instanciação de consumer
 	 * @param quantity : int -> Recebe quantidade de instâncias a serem criadas
 	 * 
 	 * @return List<{@link IConsumer}>
