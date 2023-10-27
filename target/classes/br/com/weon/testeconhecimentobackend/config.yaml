@@ -8,7 +8,7 @@ DB:
 - driver: org.h2.Driver
   # Postgres: jdbc:postgresql://localhost:5432/bd
   url: jdbc:h2:mem:test
-  # Postgres: PostgreSQLDialect
+  # Postgres: org.hibernate.dialect.PostgreSQLDialect
   hibernate_dialect: org.hibernate.dialect.H2Dialect
   # validate update create create-drop
   hibernate_hbm2ddl_auto: create-drop

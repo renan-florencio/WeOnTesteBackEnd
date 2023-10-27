@@ -50,3 +50,13 @@ Após isso, a aplicação irá apontar para a config.yaml  presente em src/main/
 *   hibernate_hbm2ddl_auto: create-drop - Utilizado para definir como será o funcionamento dos ddl's na subida da aplicação
 *   usuario: sa - Usuário de acesso ao database
 *   senha: "" - Senha de acesso ao database
+
+------------------------------------------------------------
+###UML
+
+O projeto possui diagramas de classe, do projeto como um todo e também segregado por partes.
+Eles estão em dois formatos sendo .pdf e .txt com o código utilizado para gera-los através da plataforma através da plataforma <[https:\\mermaid.live](url "mermaid") 
+
+Os mesmos podem ser acessados em:
+https://github.com/renan-florencio/WeOnTesteBackEnd/tree/main/UML
+
