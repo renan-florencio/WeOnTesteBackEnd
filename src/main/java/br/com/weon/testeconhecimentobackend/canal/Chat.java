@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * {@summary Chat}
@@ -15,7 +16,14 @@ import jakarta.persistence.Id;
  */
 
 @SuppressWarnings("javadoc")
+
+@org.hibernate.annotations.NamedQueries({
+	@org.hibernate.annotations.NamedQuery(name = "obterChat", 
+			query = "from Chat where id = :id")
+	})
+
 @Entity
+@Table(name = "Chat")
 public class Chat implements ICanal {
 	
 	@Id
@@ -27,6 +35,9 @@ public class Chat implements ICanal {
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataHora;
 	
+	public Chat() {
+		
+	}
 	
 	public Chat(UUID id, String nomeUsuarioOrigem, String nomeUsuarioDestino, LocalDateTime dataHora) {
 		super();

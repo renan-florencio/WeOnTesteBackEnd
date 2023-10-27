@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * {@summary Voz}
@@ -15,7 +16,14 @@ import jakarta.persistence.Id;
  */
 
 @SuppressWarnings("javadoc")
+
+@org.hibernate.annotations.NamedQueries({
+	@org.hibernate.annotations.NamedQuery(name = "obterVoz", 
+			query = "from Voz where id = :id")
+	})
+
 @Entity
+@Table(name = "Voz")
 public class Voz implements ICanal {
 
 	@Id
@@ -27,6 +35,9 @@ public class Voz implements ICanal {
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataHora;
 	
+	public Voz() {
+		
+	}
 	
 	public Voz(UUID id, String telefoneOrigem, String telefoneDestino, LocalDateTime dataHora) {
 		super();

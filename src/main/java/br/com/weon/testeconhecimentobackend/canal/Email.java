@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * {@summary Email}
@@ -15,7 +16,14 @@ import jakarta.persistence.Id;
  */
 
 @SuppressWarnings("javadoc")
+
+@org.hibernate.annotations.NamedQueries({
+	@org.hibernate.annotations.NamedQuery(name = "obterEmail", 
+			query = "from Email where id = :id")
+	})
+
 @Entity
+@Table(name = "Email")
 public class Email implements ICanal {
 	
 	@Id
@@ -27,6 +35,9 @@ public class Email implements ICanal {
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataHora;
 
+	public Email() {
+		
+	}
 	
 	public Email(UUID id, String emailOrigem, String emailDestino, LocalDateTime dataHora) {
 		this.id = id;
