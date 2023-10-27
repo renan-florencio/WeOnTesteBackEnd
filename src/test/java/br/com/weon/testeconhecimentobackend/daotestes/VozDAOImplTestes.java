@@ -1,4 +1,4 @@
-package br.com.weon.testeconhecimentobackend.persistenciatestes;
+package br.com.weon.testeconhecimentobackend.daotestes;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,23 +7,23 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 
 import br.com.weon.testeconhecimentobackend.canal.Voz;
 import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
+import br.com.weon.testeconhecimentobackend.dao.VozDAOImpl;
 import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
-class PersistenciaTestes {
+class VozDAOImplTestes {
 
 	File yaml = new File(this.getClass().getResource("/config.yaml").getFile());
 	Voz voz = new Voz(UUID.randomUUID(),"41 9 8888-8888","41 9 999-9999",LocalDateTime.now());
-	static EntityManager em;
+	static VozDAOImpl dao;
 	
 	void criaConfiguracao() {
 		try {
@@ -36,22 +36,21 @@ class PersistenciaTestes {
 	
 	@Test
 	@Order(1)
-	void retornaInstanciaDeEntityManager() {
+	void criaInstanciaDeEntityManager() {
 		criaConfiguracao();
 		Persistencia.criar();
-		assertTrue(Persistencia.obter() instanceof EntityManager,"Não retornou uma instancia do EntityManager!");
-		em = Persistencia.obter();
+		assertTrue(Persistencia.obter() instanceof EntityManager);
+		
+		dao = new VozDAOImpl();
 	}
 	
 	@Test
 	@Order(2)
-	void persisteEntidadeEmBaseDeDados() {
-		em.getTransaction().begin();
-		em.merge(voz);
-		em.getTransaction().commit();
+	void salvarObjeto() {
 		
-		Voz dbVoz = em.createNamedQuery("obterVoz", Voz.class)
-				.setParameter("id",voz.getId()).getSingleResult();
+		dao.salvar(voz);
+		
+		Voz dbVoz = dao.obter(voz.getId());
 		
 		assertEquals(voz.getId(),dbVoz.getId(),"O ID obtido é diferente do esperado!");
 		assertEquals(voz.getTelefoneOrigem(),dbVoz.getTelefoneOrigem(),
@@ -64,39 +63,14 @@ class PersistenciaTestes {
 	
 	@Test
 	@Order(3)
-	void atualizaObjetoNaBaseDeDados() {
-		
-		voz.setTelefoneOrigem("11 1 1111-1111");
-		voz.setTelefoneDestino("22 2 2222-2222");
-
-		em.getTransaction().begin();
-		em.merge(voz);
-		em.getTransaction().commit();
-		
-		Voz dbVoz = em.createNamedQuery("obterVoz", Voz.class)
-				.setParameter("id",voz.getId()).getSingleResult();
-		
-		assertEquals("11 1 1111-1111",dbVoz.getTelefoneOrigem(),
-				"O telefone de origem obtido é diferente do esperado!");
-		assertEquals("22 2 2222-2222",dbVoz.getTelefoneDestino(),
-				"O telefone de destino obtido é diferente do esperado!");
+	void obterTodosOsObjetos() {
+		assertEquals(1,dao.obterTodos().size(),"O dao não retornou nenhum objeto do tipo Voz");
 	}
 	
 	@Test
-	@Order(4)
-	void removeObjetoDaBaseDeDados() {
-
-		em.getTransaction().begin();
-		em.remove(em.contains(voz) ? voz : em.merge(voz));
-		em.getTransaction().commit();
-		
-		assertThrows(NoResultException.class,() -> em.createNamedQuery("obterVoz", Voz.class)
-				.setParameter("id",voz.getId()).getSingleResult(),
+	void removerObjeto() {
+		dao.remover(voz);
+		assertThrows(NoResultException.class,() -> dao.obter(voz.getId()),
 				"O objeto não foi removido da base de dados!");
-	}
-	
-	@AfterAll
-	static void fechaConexao() {
-		em.close();
 	}
 }

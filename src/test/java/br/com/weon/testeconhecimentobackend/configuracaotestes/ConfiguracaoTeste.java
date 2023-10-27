@@ -23,8 +23,8 @@ class ConfiguracaoTeste {
 		try {
 			Configuracao.configurar(yaml.getAbsolutePath());
 		} catch (IOException e) {
-			e.printStackTrace();
 			assertTrue(false,"Ocorreu um erro ao encontrar o arquivo ou em sua configuração!");
+			e.printStackTrace();
 		}
 	}
 	
@@ -78,7 +78,7 @@ class ConfiguracaoTeste {
 	
 	@Test
 	void verificaSeHbmToDdlEstaDefinidoNaConfiguracaoDeDB() {
-		assertEquals("create",Configuracao.obter().getDbConfig().get(0).getHibernateHbmToDDL(),
+		assertEquals("create-drop",Configuracao.obter().getDbConfig().get(0).getHibernateHbmToDDL(),
 				"A configuração não retornou a a configuração do hbm to ddl!");
 	}
 	
