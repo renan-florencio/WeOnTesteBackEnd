@@ -1,84 +1,84 @@
 package br.com.weon.testeconhecimentobackend;
 
 import java.io.IOException;
-import java.lang.Thread.State;
-import java.security.InvalidParameterException;
-import java.util.Arrays;
+import java.net.URL;
 import java.util.List;
-import java.util.Properties;
 
-import br.com.weon.testeconhecimentobackend.config.Config;
-import br.com.weon.testeconhecimentobackend.consumer.Consumer;
-import br.com.weon.testeconhecimentobackend.consumer.IConsumer;
-import br.com.weon.testeconhecimentobackend.factory.ConsumerFactory;
-import br.com.weon.testeconhecimentobackend.factory.ProducerFactory;
-import br.com.weon.testeconhecimentobackend.producer.ChatProducer;
-import br.com.weon.testeconhecimentobackend.producer.EmailProducer;
-import br.com.weon.testeconhecimentobackend.producer.IProducer;
-import br.com.weon.testeconhecimentobackend.producer.VoiceProducer;
-import br.com.weon.testeconhecimentobackend.queue.ObjectQueue;
-import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
+import br.com.weon.testeconhecimentobackend.canal.Canal;
+import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
+import br.com.weon.testeconhecimentobackend.consumidor.IConsumidor;
+import br.com.weon.testeconhecimentobackend.fabrica.FabricaConsumidor;
+import br.com.weon.testeconhecimentobackend.fabrica.FabricaProdutor;
+import br.com.weon.testeconhecimentobackend.filadeobjetos.FilaDeObjetos;
+import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
+import br.com.weon.testeconhecimentobackend.produtor.IProdutor;
 
 /**
  * @author Renan Florencio de Oliveira
  * 
- * @version 1.0
+ * @version 2.0
  * 
  */
 public class App {
 	
+	static URL path = App.class.getProtectionDomain().getCodeSource().getLocation();
+	static String packagePath = App.class.getPackageName().toString();
+	
+	
 	/**
-	 * Método principal da clase
+	 * Método principal da classe
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		
+		//Usado somente durante desenvolvimento
+		/*String configPath = path.getPath()+
+					packagePath.replace(".", "/")+
+					"/config.yaml";*/
+		
+		String configPath = "./config/config.yaml";
+		
 		try {
-
-			EntityManagerSingleton.getInstance();
-			Properties conf = Config.loadProperties();
-			int voiceProducersInstances = Integer.parseInt(conf.getProperty("producers.voice.instances"));
-			int chatProducersInstances = Integer.parseInt(conf.getProperty("producers.chat.instances"));
-			int emailProducersInstances = Integer.parseInt(conf.getProperty("producers.email.instances"));
-			int consumerInstances = Integer.parseInt(conf.getProperty("consumers.instances"));
-
-			List<IProducer> voiceProducer = ProducerFactory.getInstances(VoiceProducer::new, voiceProducersInstances);
-
-			List<IProducer> chatProducer = ProducerFactory.getInstances(EmailProducer::new, chatProducersInstances);
-
-			List<IProducer> emailProducer = ProducerFactory.getInstances(ChatProducer::new, emailProducersInstances);
-
-			List<IConsumer> consumers = ConsumerFactory.getInstances(Consumer::new, consumerInstances);
-
-			voiceProducer.forEach(x -> new Thread(x).start());
-			chatProducer.forEach(x -> new Thread(x).start());
-			emailProducer.forEach(x -> new Thread(x).start());
-			
-			Thread[] consumersThread = new Thread[consumerInstances];
-			
-			for (int i = 0; i < consumers.size(); i++) {
-				Thread x = new Thread(consumers.get(i));
-				x.start();
-				consumersThread[i] = x;
-				
-			}
-			
-
-			while (true) {
-				
-				if (Arrays.asList(consumersThread).stream().filter(x -> x.getState() == State.TERMINATED).toArray().length == consumersThread.length) {
-					System.out.println("\n------------------------\n");
-					System.out.println(ObjectQueue.getInstance());
-					break;
-				}
-
-			}
-
-		} catch (
-
-		InvalidParameterException e) {
-			System.out.println(e.getMessage());
+			Configuracao.configurar(configPath);
 		} catch (IOException e) {
-			System.out.println(e.getMessage());
+			e.printStackTrace();
+			System.exit(0);
 		}
+		
+		Persistencia.criar();
+		FilaDeObjetos.criar();
+		FilaDeObjetos fila = FilaDeObjetos.singleton();
+		
+		int instanciasVoz = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
+		int instanciasEmail = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
+		int instanciasChat = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
+		int instanciasConsumidor = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
+		
+		List<? extends IProdutor> voz = FabricaProdutor.fabricarProdutor(Canal.VOZ, instanciasVoz);
+		
+		List<? extends IProdutor> email = FabricaProdutor.fabricarProdutor(Canal.EMAIL, instanciasEmail);
+		
+		List<? extends IProdutor> chat = FabricaProdutor.fabricarProdutor(Canal.CHAT, instanciasChat);
+		
+		List<? extends IConsumidor> consumidores = FabricaConsumidor.fabricarConsumidor(instanciasConsumidor);
+		
+		voz.forEach(x -> new Thread(x).start());
+		email.forEach(x-> new Thread(x).start());
+		chat.forEach(x -> new Thread(x).start());
+		
+		consumidores.forEach(x -> new Thread(x).start());
+		
+		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
+		
+		while(true) {
+			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout) {
+				System.out.println();
+				System.out.println("------------------------------");
+				System.out.println(FilaDeObjetos.singleton());
+				break;
+			}
+		}
+		
+		Persistencia.singleton().fecharConexao();
 	}
 }

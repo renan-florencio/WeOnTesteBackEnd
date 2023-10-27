@@ -1,37 +1,39 @@
 package br.com.weon.testeconhecimentobackend.dao;
 
-import br.com.weon.testeconhecimentobackend.model.Chat;
-import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
-import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
+
+import br.com.weon.testeconhecimentobackend.canal.Chat;
+import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 
 /**
  * {@summary ChatDAOImpl}
- * Implementação de DAO para classe Chat
+ * Implementação de interface DAO de chat
  */
 public class ChatDAOImpl implements IChatDAO {
 	
-	/**
-	 * {@summary ChatDAOImpl.save(Chat chat)}
-	 * Método save
-	 * <br>Recebe um objeto Chat e realiza a persistencia do mesmo no banco de dados
-	 */
+	private Persistencia persistencia = Persistencia.singleton();
+	
 	@Override
-	@Transactional
-	public void save(Chat chat) {
-		EntityManagerSingleton.save(chat);
+	public synchronized void salvar(Chat chat) {
+		persistencia.salvar(chat);
 	}
 
-	/**
-	 * {@summary ChatDAOImpl.delete(Chat chat)}
-	 * Método delete
-	 * <br>Recebe um objeto Chat e realiza a remoção do mesmo no banco de dados
-	 * 
-	 * @param chat 
-	 */
 	@Override
-	@Transactional
-	public void delete(Chat chat) {
-		EntityManagerSingleton.remove(chat);
+	public synchronized Chat obter(UUID id) {
+		return persistencia.consultaNomeada("obterChat", Chat.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
+	@Override
+	public synchronized List<Chat> obterTodos() {
+		return persistencia.criarConsulta("from Chat", Chat.class)
+				.getResultList();
+	}
+
+	@Override
+	public synchronized void remover(Chat chat) {
+		persistencia.remover(chat);
 	}
 
 }

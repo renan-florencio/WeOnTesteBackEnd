@@ -1,25 +1,21 @@
 package br.com.weon.testeconhecimentobackend.dao;
 
-import br.com.weon.testeconhecimentobackend.model.Chat;
+import java.util.List;
+import java.util.UUID;
+
+import br.com.weon.testeconhecimentobackend.canal.Chat;
 
 /**
- * {@summary IChatDAO}
- * Classe DAO com métodos a serem implementados por DAO de Chat
+ * {@summary IVozDAO}
+ * DAO de entidade Chat
  */
+
+@SuppressWarnings("javadoc")
 public interface IChatDAO {
-	
-	/**
-	 * {@summary IChatDAO.save(Chat chat)}
-	 * Método a ser implementado por DAO para persistir dados no banco de dados
-	 * @param chat
-	 */
-	void save(Chat chat);
-	
-	/**
-	 * {@summary IChatDAO.delete(Chat chat)}
-	 * Método a ser implementado por DAO para remover dados no banco de dados
-	 * @param chat
-	 */
-	void delete(Chat chat);
+
+	void salvar(Chat chat);
+	Chat obter(UUID id);
+	List<Chat> obterTodos();
+	void remover(Chat chat);
 	
 }

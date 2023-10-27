@@ -1,25 +1,21 @@
 package br.com.weon.testeconhecimentobackend.dao;
 
-import br.com.weon.testeconhecimentobackend.model.Email;
+import java.util.List;
+import java.util.UUID;
+
+import br.com.weon.testeconhecimentobackend.canal.Email;
 
 /**
- * {@summary IEmailDAO}
- * Classe DAO com métodos a serem implementados por DAO de Email
+ * {@summary IVozDAO}
+ * DAO de entidade Chat
  */
+
+@SuppressWarnings("javadoc")
 public interface IEmailDAO {
 
-	/**
-	 * {@summary IEmailDAO.save(Email email)}
-	 * Método a ser implementado por DAO para persistir dados no banco de dados
-	 * @param email
-	 */
-	void save(Email email);
-	
-	/**
-	 * {@summary IEmailDAO.delete(Email email)}
-	 * Método a ser implementado por DAO para remover dados no banco de dados
-	 * @param email
-	 */
-	void delete(Email email);
+	void salvar(Email email);
+	Email obter(UUID id);
+	List<Email> obterTodos();
+	void remover(Email email);
 	
 }

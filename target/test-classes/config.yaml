@@ -1,0 +1,12 @@
+consumidores: 1
+produtores_voz: 2
+produtores_email: 3
+produtores_chat: 4
+produtores_timeout: 15
+DB:
+- driver: org.h2.Driver
+  url: jdbc:h2:mem:test
+  hibernate_dialect: org.hibernate.dialect.H2Dialect
+  hibernate_hbm2ddl_auto: create-drop
+  usuario: sa
+  senha: ""

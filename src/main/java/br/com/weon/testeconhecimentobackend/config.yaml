@@ -1,0 +1,17 @@
+consumidores: 2
+produtores_voz: 3
+produtores_email: 3
+produtores_chat: 3
+produtores_timeout: 10
+DB:
+  # Postgres: org.postgresql.Driver
+- driver: org.h2.Driver
+  # Postgres: jdbc:postgresql://localhost:5432/bd
+  url: jdbc:h2:mem:test
+  # Postgres: org.hibernate.dialect.PostgreSQLDialect
+  hibernate_dialect: org.hibernate.dialect.H2Dialect
+  # validate update create create-drop
+  hibernate_hbm2ddl_auto: create-drop
+  usuario: sa
+  # Caso não tenha senha usar aspas duplas ""
+  senha: ""

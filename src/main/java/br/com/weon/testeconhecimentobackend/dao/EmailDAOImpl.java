@@ -1,37 +1,38 @@
 package br.com.weon.testeconhecimentobackend.dao;
 
-import br.com.weon.testeconhecimentobackend.model.Email;
-import br.com.weon.testeconhecimentobackend.service.EntityManagerSingleton;
-import jakarta.transaction.Transactional;
+import java.util.List;
+import java.util.UUID;
 
+import br.com.weon.testeconhecimentobackend.canal.Email;
+import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 /**
  * {@summary EmailDAOImpl}
- * Implementação de DAO para Email
+ * Implementação de interface DAO de email
  */
 public class EmailDAOImpl implements IEmailDAO {
 	
-	/**
-	 * {@summary EmailDAOImpl.save(Email email)}
-	 * Método save
-	 * <br>Recebe um objeto Email e realiza a persistencia do mesmo no banco de dados
-	 */
+	private Persistencia persistencia = Persistencia.singleton();
+	
 	@Override
-	@Transactional
-	public void save(Email email) {
-		EntityManagerSingleton.save(email);
+	public synchronized void salvar(Email email) {
+		persistencia.salvar(email);
 	}
 
-	/**
-	 * {@summary EmailDAOImpl.delete(Email email)}
-	 * Método delete
-	 * Recebe um objeto Email e realiza a remoção do mesmo no banco de dados
-	 * 
-	 * @Param Email
-	 */
 	@Override
-	@Transactional
-	public void delete(Email email) {
-		EntityManagerSingleton.remove(email);
+	public synchronized Email obter(UUID id) {
+		return persistencia.consultaNomeada("obterEmail", Email.class)
+				.setParameter("id", id).getSingleResult();
+	}
+
+	@Override
+	public synchronized List<Email> obterTodos() {
+		return persistencia.criarConsulta("from Email", Email.class)
+				.getResultList();
+	}
+
+	@Override
+	public synchronized void remover(Email email) {
+		persistencia.remover(email);
 	}
 
 }

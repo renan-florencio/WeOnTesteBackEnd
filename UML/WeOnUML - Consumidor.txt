@@ -1,0 +1,54 @@
+classDiagram
+
+    Runnable <|-- IConsumidor
+    IConsumidor <|.. Consumidor
+    Consumidor <.. FabricaConsumidor
+    Canal <.. FabricaProdutor
+	Consumidor ..> Persistencia
+    Consumidor ..> FilaDeObjetos
+
+    class Runnable{
+        <<interface>>
+        +run()*
+    }
+
+    class IConsumidor{
+        <<interface>>
+        + consumir()void
+    }
+
+    class Consumidor{
+        FilaDeObjetos fila
+    }
+
+    class FabricaConsumidor{
+        + fabricarConsumidor(int quantidade)List~IConsumidor~$
+    }
+
+    class FilaDeObjetos{
+        - Queue~ICanal~ fila
+        - FilaDeObjetos INSTANCE$
+		- Integer objetosProduzidos
+		- Integer objetosConsumidos
+		- Integer tamanhoDaFila
+        + adicionar(ICanal canal)
+        + obter()ICanal
+		+ tamanho()int
+		+ totalDeObjetosConsumidos()int
+        + criar()void$
+        + singleton()FilaDeObjetos$
+    }
+
+    class Persistencia{
+        - EntityManager entityManager
+		- Persistencia singleton
+        + criar()void$
+		+ singleton()Persistencia$
+        - abrirTransacao()void$
+        - commitarTransacao()void$
+		+ salvar(Object obj)void
+		+ remover(Object obj)void
+		+ consultaNomeada(String nome, Class~T~ classe)TypedQuery~T~
+		+ criarConsulta(String nome, Class~T~ classe)TypedQuery~T~
+		+ fecharConexao()void
+    }
