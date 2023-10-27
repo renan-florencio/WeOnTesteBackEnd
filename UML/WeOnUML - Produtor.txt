@@ -1,0 +1,153 @@
+classDiagram
+
+    Runnable <|-- IProdutor
+    IProdutor <|.. ProdutorVoz
+    IProdutor <|.. ProdutorEmail
+    IProdutor <|.. ProdutorChat
+    Canal <.. FabricaProdutor
+    ProdutorVoz <.. FabricaProdutor
+    ProdutorEmail <.. FabricaProdutor
+    ProdutorChat <.. FabricaProdutor
+    ProdutorVoz ..> Voz
+    ProdutorEmail ..> Email
+    ProdutorChat ..> Chat
+    VozDAOImpl ..> Persistencia
+    EmailDAOImpl ..> Persistencia
+    ChatDAOImpl ..> Persistencia
+    ICanal <.. Voz
+    ICanal <.. Email
+    ICanal <.. Chat
+    Voz ..* FilaDeObjetos
+    Email ..* FilaDeObjetos
+    Chat ..* FilaDeObjetos
+    IVozDAO <|.. VozDAOImpl
+    IEmailDAO <|.. EmailDAOImpl
+    IChatDAO <|.. ChatDAOImpl
+    VozDAOImpl <.. ProdutorVoz
+    EmailDAOImpl <.. ProdutorEmail
+    ChatDAOImpl <.. ProdutorChat
+    FilaDeObjetos <.. ProdutorVoz
+    FilaDeObjetos <.. ProdutorEmail
+    FilaDeObjetos <.. ProdutorChat
+
+    class Runnable{
+        <<interface>>
+        +run()*
+    }
+
+    class IProdutor{
+        <<interface>>
+        + produzir()void
+    }
+
+    class ProdutorVoz{
+        FilaDeObjetos fila
+    }
+
+    class ProdutorEmail{
+        FilaDeObjetos fila
+    }
+
+    class ProdutorChat{
+        FilaDeObjetos fila
+    }
+
+    class Canal{
+        <<enumation>>
+        Voz
+        Email
+        Chat
+    }
+
+    class FabricaProdutor{
+        + fabricarProdutor(Canal canal, int quantidade)List~IProdutor~$
+    }
+
+    class FilaDeObjetos{
+        - Queue~ICanal~ fila
+        - FilaDeObjetos INSTANCE$
+		- Integer objetosProduzidos
+		- Integer objetosConsumidos
+		- Integer tamanhoDaFila
+        + adicionar(ICanal canal)
+        + obter()ICanal
+		+ tamanho()int
+		+ totalDeObjetosConsumidos()int
+        + criar()void$
+        + singleton()FilaDeObjetos$
+    }
+
+    class ICanal{
+        + acessar()*
+    }
+
+    class Voz{
+        - UUID id
+        - String telefoneOrigem
+        - String telefoneDestino
+        - LocalDateTime dataHora
+    }
+
+    class Email{
+        - UUID id
+        - String emailOrigem
+        - String emailDestino
+        - LocalDateTime dataHora
+    }
+
+    class Chat{
+        - UUID id
+        - String nomeUsuarioOrigem
+        - String nomeUsuarioDestino
+        - LocalDateTime dataHora
+    }
+
+    class IVozDAO{
+        <<interface>>
+        + salvar(Voz voz)void
+        + obter(UUID id)Voz
+        + obterTodos()List~Voz~
+        + remover(Voz voz)void
+    }
+
+    class IEmailDAO{
+        <<interface>>
+        + salvar(Email email)void
+        + obter(UUID id)Email
+        + obterTodos()List~Email~
+        + remover(Email email)void
+    }
+
+    class IChatDAO{
+        <<interface>>
+        + salvar(Chat chat)void
+        + obter(UUID id)Chat
+        + obterTodos()List~Chat~
+        + remover(Chat chat)void
+    }
+
+    class VozDAOImpl{
+        - EntityManager entiyManager
+    }
+
+    class EmailDAOImpl{
+        - EntityManager entiyManager
+    }
+
+    class ChatDAOImpl{
+        - EntityManager entiyManager
+    }
+
+    class Persistencia{
+        - EntityManager entityManager
+		- Persistencia singleton
+        + criar()void$
+		+ singleton()Persistencia$
+        - abrirTransacao()void$
+        - commitarTransacao()void$
+		+ salvar(Object obj)void
+		+ remover(Object obj)void
+		+ consultaNomeada(String nome, Class~T~ classe)TypedQuery~T~
+		+ criarConsulta(String nome, Class~T~ classe)TypedQuery~T~
+		+ fecharConexao()void
+    }
