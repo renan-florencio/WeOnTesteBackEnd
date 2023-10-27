@@ -21,13 +21,13 @@ public class FabricaProdutor {
 	 * @return List<{@link IProdutor}>
 	 * @throws InvalidParameterException - Lançada caso o parâmetro quantidade seja <= 0;
 	 */
-	public static List<? extends IProdutor> fabricarProdutor(Canal canal, int quantidade) throws InvalidParameterException{
+	public static List<IProdutor> fabricarProdutor(Canal canal, int quantidade) throws InvalidParameterException{
 		if (quantidade <= 0) {
 			throw new InvalidParameterException("Não é possível criar "
 					+ quantidade+" instancias de IProdutor");
 		}
 		
-		Supplier<? extends IProdutor> produtor = null;
+		Supplier<IProdutor> produtor = null;
 		
 		switch (canal) {
 		case VOZ:

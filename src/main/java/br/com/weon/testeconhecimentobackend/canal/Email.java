@@ -95,7 +95,8 @@ public class Email implements ICanal {
 
 	@Override
 	public void acessar() {
-		System.out.println("Consumido: "+ this.getId() + " - " + this.getEmailOrigem());
+		System.out.println("Objeto consumido: "+ this.getId() + "\n" 
+				+ LocalDateTime.now() + " - Origem: " + this.getEmailOrigem());
 	}
 
 }

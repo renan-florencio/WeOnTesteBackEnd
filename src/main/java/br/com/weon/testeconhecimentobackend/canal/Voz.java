@@ -95,7 +95,8 @@ public class Voz implements ICanal {
 
 	@Override
 	public void acessar() {
-		System.out.println("Consumido: "+ this.getId() + " - " + this.getTelefoneOrigem());
+		System.out.println("Objeto consumido: "+ this.getId() + "\n" 
+				+ LocalDateTime.now() + " - Origem: " + this.getTelefoneOrigem());
 	}
 
 }

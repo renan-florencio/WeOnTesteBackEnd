@@ -67,13 +67,12 @@ public class App {
 		chat.forEach(x -> new Thread(x).start());
 		
 		consumidores.forEach(x -> new Thread(x).start());
-		
 		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
+		
 		
 		while(true) {
 			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout) {
-				System.out.println();
-				System.out.println("------------------------------");
+				System.out.println("\n------------------------------");
 				System.out.println(FilaDeObjetos.singleton());
 				break;
 			}
