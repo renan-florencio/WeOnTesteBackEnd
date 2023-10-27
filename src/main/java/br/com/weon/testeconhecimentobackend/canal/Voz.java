@@ -39,8 +39,13 @@ public class Voz implements ICanal {
 		
 	}
 	
+	public Voz(String telefoneOrigem, String telefoneDestino, LocalDateTime dataHora) {
+		this.telefoneOrigem = telefoneOrigem;
+		this.telefoneDestino = telefoneDestino;
+		this.dataHora = dataHora;
+	}
+	
 	public Voz(UUID id, String telefoneOrigem, String telefoneDestino, LocalDateTime dataHora) {
-		super();
 		this.id = id;
 		this.telefoneOrigem = telefoneOrigem;
 		this.telefoneDestino = telefoneDestino;

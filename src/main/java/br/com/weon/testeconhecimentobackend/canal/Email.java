@@ -39,6 +39,12 @@ public class Email implements ICanal {
 		
 	}
 	
+	public Email(String emailOrigem, String emailDestino, LocalDateTime dataHora) {
+		this.emailOrigem = emailOrigem;
+		this.emailDestino = emailDestino;
+		this.dataHora = dataHora;
+	}
+	
 	public Email(UUID id, String emailOrigem, String emailDestino, LocalDateTime dataHora) {
 		this.id = id;
 		this.emailOrigem = emailOrigem;

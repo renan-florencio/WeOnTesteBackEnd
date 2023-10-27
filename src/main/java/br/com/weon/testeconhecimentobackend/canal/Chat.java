@@ -39,8 +39,13 @@ public class Chat implements ICanal {
 		
 	}
 	
+	public Chat(String nomeUsuarioOrigem, String nomeUsuarioDestino, LocalDateTime dataHora) {
+		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
+		this.nomeUsuarioDestino = nomeUsuarioDestino;
+		this.dataHora = dataHora;
+	}
+	
 	public Chat(UUID id, String nomeUsuarioOrigem, String nomeUsuarioDestino, LocalDateTime dataHora) {
-		super();
 		this.id = id;
 		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
 		this.nomeUsuarioDestino = nomeUsuarioDestino;
