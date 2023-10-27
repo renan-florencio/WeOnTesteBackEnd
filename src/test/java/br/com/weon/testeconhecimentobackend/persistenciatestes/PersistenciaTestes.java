@@ -18,10 +18,11 @@ import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 import jakarta.persistence.NoResultException;
 
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
-class PersistenciaTestes {
+class persistenciaTestes {
 
 	File yaml = new File(this.getClass().getResource("/config.yaml").getFile());
 	Voz voz = new Voz(UUID.randomUUID(),"41 9 8888-8888","41 9 999-9999",LocalDateTime.now());
+	Persistencia persistencia;
 	
 	void criaConfiguracao() {
 		try {
@@ -37,14 +38,15 @@ class PersistenciaTestes {
 	void retornaInstanciaDeEntityManager() {
 		criaConfiguracao();
 		Persistencia.criar();
+		persistencia = Persistencia.singleton();
 	}
 	
 	@Test
 	@Order(2)
 	void persisteEntidadeEmBaseDeDados() {
-		Persistencia.salvar(voz);
+		persistencia.salvar(voz);
 		
-		Voz dbVoz = Persistencia.consultaNomeada("obterVoz", Voz.class)
+		Voz dbVoz = persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult();
 		
 		assertEquals(voz.getId(),dbVoz.getId(),"O ID obtido é diferente do esperado!");
@@ -63,9 +65,9 @@ class PersistenciaTestes {
 		voz.setTelefoneOrigem("11 1 1111-1111");
 		voz.setTelefoneDestino("22 2 2222-2222");
 
-		Persistencia.salvar(voz);
+		persistencia.salvar(voz);
 		
-		Voz dbVoz = Persistencia.consultaNomeada("obterVoz", Voz.class)
+		Voz dbVoz = persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult();
 		
 		assertEquals("11 1 1111-1111",dbVoz.getTelefoneOrigem(),
@@ -78,15 +80,15 @@ class PersistenciaTestes {
 	@Order(4)
 	void removeObjetoDaBaseDeDados() {
 
-		Persistencia.remover(voz);
+		persistencia.remover(voz);
 		
-		assertThrows(NoResultException.class,() -> Persistencia.consultaNomeada("obterVoz", Voz.class)
+		assertThrows(NoResultException.class,() -> persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult(),
 				"O objeto não foi removido da base de dados!");
 	}
 	
 	@AfterAll
 	static void fechaConexao() {
-		Persistencia.fecharConexao();
+		Persistencia.singleton().fecharConexao();
 	}
 }

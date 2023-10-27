@@ -24,6 +24,7 @@ public class App {
 	static URL path = App.class.getProtectionDomain().getCodeSource().getLocation();
 	static String packagePath = App.class.getPackageName().toString();
 	
+	
 	/**
 	 * Método principal da classe
 	 * @param args
@@ -42,18 +43,20 @@ public class App {
 		
 		Persistencia.criar();
 		FilaDeObjetos.criar();
+		FilaDeObjetos fila = FilaDeObjetos.singleton();
 		
-		List<? extends IProdutor> voz = FabricaProdutor.fabricarProdutor(Canal.VOZ, 
-				Integer.parseInt(Configuracao.obter().getProdutoresVoz()));
+		int instanciasVoz = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
+		int instanciasEmail = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
+		int instanciasChat = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
+		int instanciasConsumidor = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
 		
-		List<? extends IProdutor> email = FabricaProdutor.fabricarProdutor(Canal.EMAIL, 
-				Integer.parseInt(Configuracao.obter().getProdutoresEmail()));
+		List<? extends IProdutor> voz = FabricaProdutor.fabricarProdutor(Canal.VOZ, instanciasVoz);
 		
-		List<? extends IProdutor> chat = FabricaProdutor.fabricarProdutor(Canal.CHAT, 
-				Integer.parseInt(Configuracao.obter().getProdutoresChat()));
+		List<? extends IProdutor> email = FabricaProdutor.fabricarProdutor(Canal.EMAIL, instanciasEmail);
 		
-		List<? extends IConsumidor> consumidores = FabricaConsumidor.fabricarConsumidor(
-				Integer.parseInt(Configuracao.obter().getConsumidores()));
+		List<? extends IProdutor> chat = FabricaProdutor.fabricarProdutor(Canal.CHAT, instanciasChat);
+		
+		List<? extends IConsumidor> consumidores = FabricaConsumidor.fabricarConsumidor(instanciasConsumidor);
 		
 		voz.forEach(x -> new Thread(x).start());
 		email.forEach(x-> new Thread(x).start());
@@ -62,15 +65,16 @@ public class App {
 		consumidores.forEach(x -> new Thread(x).start());
 		
 		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
+		
 		while(true) {
-			if (FilaDeObjetos.singleton().tamanho() == 0 && FilaDeObjetos.singleton().totalDeObjetosConsumidos() > 0
-					&& System.currentTimeMillis() > timeout) {
+			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout) {
+				System.out.println();
 				System.out.println("------------------------------");
 				System.out.println(FilaDeObjetos.singleton());
 				break;
 			}
 		}
 		
-		Persistencia.fecharConexao();
+		Persistencia.singleton().fecharConexao();
 	}
 }

@@ -12,26 +12,28 @@ import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
  */
 public class VozDAOImpl implements IVozDAO {
 	
+	private Persistencia persistencia = Persistencia.singleton();
+	
 	@Override
 	public synchronized void salvar(Voz voz) {
-		Persistencia.salvar(voz);
+		persistencia.salvar(voz);
 	}
 
 	@Override
 	public synchronized Voz obter(UUID id) {
-		return Persistencia.consultaNomeada("obterVoz", Voz.class)
+		return persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id", id).getSingleResult();
 	}
 
 	@Override
 	public synchronized List<Voz> obterTodos() {
-		return Persistencia.criarConsulta("from Voz", Voz.class)
+		return persistencia.criarConsulta("from Voz", Voz.class)
 				.getResultList();
 	}
 
 	@Override
 	public synchronized void remover(Voz voz) {
-		Persistencia.remover(voz);
+		persistencia.remover(voz);
 	}
 
 }

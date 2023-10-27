@@ -27,7 +27,7 @@ public class ProdutorVoz implements IProdutor {
 	@Override
 	public void run() {
 		
-		long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) * 1000;
+		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
 		
 		while (System.currentTimeMillis() < timeout) {
 			produzir();

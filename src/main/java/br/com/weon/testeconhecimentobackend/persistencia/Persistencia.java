@@ -16,13 +16,14 @@ import jakarta.persistence.TypedQuery;
 public class Persistencia {
 
 	private static EntityManager entityManager;
+	private static Persistencia singleton;
 	
 	/**
 	 * {@summary EntityManagerSingleton.getInstance()}
 	 * Metódo estático para retornar instancia do {@link EntityManager}
 	 */
 	public static void criar(){
-		if(entityManager == null){
+		if(entityManager == null && singleton == null){
 			
 			Map<String, Object> propriedades = new HashMap<String, Object>();
 			propriedades.put("jakarta.persistence.jdbc.driver",
@@ -40,9 +41,18 @@ public class Persistencia {
 			
 			EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("ConexaoDB",propriedades);
 			entityManager = entityManagerFactory.createEntityManager();
+			singleton = new Persistencia();
+			
 		}
 	}
 	
+	/**
+	 * Retorna singleton da classe
+	 * @return Persistencia - Classe de persistencia
+	 */
+	public static Persistencia singleton() {
+		return singleton;
+	}
 	
 	/**
 	 * Método para abrir transações
@@ -62,7 +72,7 @@ public class Persistencia {
 	 * Método de persistencia de objeto
 	 * @param obj - Qualquer entidade que possa ser persistida na base
 	 */
-	public static synchronized void salvar(Object obj) {
+	public synchronized void salvar(Object obj) {
 		abrirTransacao();
 		entityManager.persist(entityManager.contains(obj) ? obj : entityManager.merge(obj));
 		commitarTransacao();
@@ -72,7 +82,7 @@ public class Persistencia {
 	 * Método de remoção de objeto da base
 	 * @param obj - Qualquer entidade que possa ser persistida na base
 	 */
-	public static synchronized void remover(Object obj) {
+	public synchronized void remover(Object obj) {
 		abrirTransacao();
 		entityManager.remove(entityManager.contains(obj) ? obj : entityManager.merge(obj));
 		commitarTransacao();
@@ -85,7 +95,7 @@ public class Persistencia {
 	 * @param <T>
 	 * @return TypedQuery 
 	 */
-	public static synchronized <T> TypedQuery<T> consultaNomeada(String nome, Class<T> classe) {
+	public synchronized <T> TypedQuery<T> consultaNomeada(String nome, Class<T> classe) {
 		return entityManager.createNamedQuery(nome,classe);
 	}
 	
@@ -96,14 +106,14 @@ public class Persistencia {
 	 * @param <T>
 	 * @return TypedQuery 
 	 */
-	public static synchronized <T> TypedQuery<T> criarConsulta(String query, Class<T> classe) {
+	public synchronized <T> TypedQuery<T> criarConsulta(String query, Class<T> classe) {
 		return entityManager.createQuery(query,classe);
 	}
 	
 	/**
 	 * Realiza o encerramento da conexao com o BD
 	 */
-	public static synchronized void fecharConexao() {
+	public synchronized void fecharConexao() {
 		entityManager.close();
 	}
 

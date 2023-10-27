@@ -1,6 +1,7 @@
 package br.com.weon.testeconhecimentobackend.consumidor;
 
 import br.com.weon.testeconhecimentobackend.canal.ICanal;
+import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
 import br.com.weon.testeconhecimentobackend.filadeobjetos.FilaDeObjetos;
 import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 
@@ -14,9 +15,11 @@ public class Consumidor implements IConsumidor {
 	
 	@Override
 	public void run() {
+		
+		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
 		while (true) {
 			
-			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0) {
+			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout) {
 				break;
 			}
 			
@@ -32,7 +35,8 @@ public class Consumidor implements IConsumidor {
 		
 		if (canal != null) {
 			canal.acessar();
-			Persistencia.remover(canal);
+			Persistencia.singleton().remover(canal);
+			System.out.println("Removido: "+ canal);
 		}
 	}
 
