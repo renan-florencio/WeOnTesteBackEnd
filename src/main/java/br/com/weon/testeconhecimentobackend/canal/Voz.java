@@ -22,17 +22,17 @@ public class Voz implements ICanal {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(unique = true,nullable = false)
 	private UUID id;
-	private String nomeUsuarioOrigem;
-	private String nomeUsuarioDestino;
+	private String telefoneOrigem;
+	private String telefoneDestino;
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataHora;
 	
 	
-	public Voz(UUID id, String nomeUsuarioOrigem, String nomeUsuarioDestino, LocalDateTime dataHora) {
+	public Voz(UUID id, String telefoneOrigem, String telefoneDestino, LocalDateTime dataHora) {
 		super();
 		this.id = id;
-		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
-		this.nomeUsuarioDestino = nomeUsuarioDestino;
+		this.telefoneOrigem = telefoneOrigem;
+		this.telefoneDestino = telefoneDestino;
 		this.dataHora = dataHora;
 	}
 
@@ -47,23 +47,23 @@ public class Voz implements ICanal {
 	}
 
 
-	public String getNomeUsuarioOrigem() {
-		return nomeUsuarioOrigem;
+	public String getTelefoneOrigem() {
+		return telefoneOrigem;
 	}
 
 
-	public void setNomeUsuarioOrigem(String nomeUsuarioOrigem) {
-		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
+	public void setTelefoneOrigem(String telefoneOrigem) {
+		this.telefoneOrigem = telefoneOrigem;
 	}
 
 
-	public String getNomeUsuarioDestino() {
-		return nomeUsuarioDestino;
+	public String getTelefoneDestino() {
+		return telefoneDestino;
 	}
 
 
-	public void setNomeUsuarioDestino(String nomeUsuarioDestino) {
-		this.nomeUsuarioDestino = nomeUsuarioDestino;
+	public void setTelefoneDestino(String telefoneDestino) {
+		this.telefoneDestino = telefoneDestino;
 	}
 
 
@@ -79,8 +79,7 @@ public class Voz implements ICanal {
 
 	@Override
 	public void acessar() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Consumido: "+ this.getId() + " - " + this.getTelefoneOrigem());
 	}
 
 }

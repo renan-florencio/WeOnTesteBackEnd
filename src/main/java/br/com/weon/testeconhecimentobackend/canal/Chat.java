@@ -22,17 +22,17 @@ public class Chat implements ICanal {
 	@GeneratedValue(strategy = GenerationType.UUID)
 	@Column(unique = true,nullable = false)
 	private UUID id;
-	private String telefoneOrigem;
-	private String telefoneDestino;
+	private String nomeUsuarioOrigem;
+	private String nomeUsuarioDestino;
 	@Column(columnDefinition = "TIMESTAMP")
 	private LocalDateTime dataHora;
 	
 	
-	public Chat(UUID id, String telefoneOrigem, String telefoneDestino, LocalDateTime dataHora) {
+	public Chat(UUID id, String nomeUsuarioOrigem, String nomeUsuarioDestino, LocalDateTime dataHora) {
 		super();
 		this.id = id;
-		this.telefoneOrigem = telefoneOrigem;
-		this.telefoneDestino = telefoneDestino;
+		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
+		this.nomeUsuarioDestino = nomeUsuarioDestino;
 		this.dataHora = dataHora;
 	}
 
@@ -50,26 +50,26 @@ public class Chat implements ICanal {
 
 
 
-	public String getTelefoneOrigem() {
-		return telefoneOrigem;
+	public String getNomeUsuarioOrigem() {
+		return nomeUsuarioOrigem;
 	}
 
 
 
-	public void setTelefoneOrigem(String telefoneOrigem) {
-		this.telefoneOrigem = telefoneOrigem;
+	public void setNomeUsuarioOrigem(String nomeUsuarioOrigem) {
+		this.nomeUsuarioOrigem = nomeUsuarioOrigem;
 	}
 
 
 
-	public String getTelefoneDestino() {
-		return telefoneDestino;
+	public String getNomeUsuarioDestino() {
+		return nomeUsuarioDestino;
 	}
 
 
 
-	public void setTelefoneDestino(String telefoneDestino) {
-		this.telefoneDestino = telefoneDestino;
+	public void setNomeUsuarioDestino(String nomeUsuarioDestino) {
+		this.nomeUsuarioDestino = nomeUsuarioDestino;
 	}
 
 
@@ -88,8 +88,7 @@ public class Chat implements ICanal {
 
 	@Override
 	public void acessar() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Consumido: "+ this.getId() + " - " + this.getNomeUsuarioOrigem());
 	}
 
 }

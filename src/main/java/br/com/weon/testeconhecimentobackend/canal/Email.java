@@ -78,8 +78,7 @@ public class Email implements ICanal {
 
 	@Override
 	public void acessar() {
-		// TODO Auto-generated method stub
-
+		System.out.println("Consumido: "+ this.getId() + " - " + this.getEmailOrigem());
 	}
 
 }
