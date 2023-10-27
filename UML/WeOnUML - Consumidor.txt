@@ -3,7 +3,6 @@ classDiagram
     Runnable <|-- IConsumidor
     IConsumidor <|.. Consumidor
     Consumidor <.. FabricaConsumidor
-    Canal <.. FabricaProdutor
 	Consumidor ..> Persistencia
     Consumidor ..> FilaDeObjetos
 
