@@ -20,13 +20,13 @@ class FabricaConsumidorTeste {
 	
 	@Test
 	void retornaUmaInstanciaDeIConsumidor() {
-		assertTrue(FabricaConsumidor.fabricarConsumidor(1).get(0) instanceof IConsumidor,
+		assertEquals(1,FabricaConsumidor.fabricarConsumidor(1).size(),
 				"A fabrica não retornou uma instancia de IConsumidor!");
 	}
 	
 	@Test
 	void retornaTresInstanciasDeIConsumidor() {
-		assertTrue(FabricaConsumidor.fabricarConsumidor(3).size() == 3,
+		assertEquals(3,FabricaConsumidor.fabricarConsumidor(3).size(),
 				"A fabrica não retornou três instancias de IConsumidor!");
 	}
 	

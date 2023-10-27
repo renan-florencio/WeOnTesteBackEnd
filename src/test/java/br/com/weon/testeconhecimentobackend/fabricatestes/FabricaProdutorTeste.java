@@ -34,11 +34,11 @@ class FabricaProdutorTeste {
 	
 	@Test
 	void retornaTresInstanciasDeIProdutorEspecifica() {
-		assertTrue(FabricaProdutor.fabricarProdutor(Canal.VOZ,3).size() == 3,
+		assertEquals(3,FabricaProdutor.fabricarProdutor(Canal.VOZ,3).size(),
 				"A fabrica não retornou três instancias de ProdutorVoz!");
-		assertTrue(FabricaProdutor.fabricarProdutor(Canal.EMAIL,3).size() == 3,
+		assertEquals(3,FabricaProdutor.fabricarProdutor(Canal.EMAIL,3).size(),
 				"A fabrica não retornou três instancias de ProdutorEmail!");
-		assertTrue(FabricaProdutor.fabricarProdutor(Canal.CHAT,3).size() == 3,
+		assertEquals(3,FabricaProdutor.fabricarProdutor(Canal.CHAT,3).size(),
 				"A fabrica não retornou três instancias de ProdutorChat!");
 	}
 	
