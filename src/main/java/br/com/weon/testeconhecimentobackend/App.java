@@ -31,11 +31,12 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		
+		//Usado somente durante desenvolvimento
 		/*String configPath = path.getPath()+
 					packagePath.replace(".", "/")+
 					"/config.yaml";*/
 		
-		String configPath = path.getPath()+"config/config.yaml";
+		String configPath = "./config/config.yaml";
 		
 		try {
 			Configuracao.configurar(configPath);
