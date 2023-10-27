@@ -65,8 +65,8 @@ public class App {
 		voz.forEach(x -> new Thread(x).start());
 		email.forEach(x-> new Thread(x).start());
 		chat.forEach(x -> new Thread(x).start());
-		
 		consumidores.forEach(x -> new Thread(x).start());
+		
 		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
 		
 		
