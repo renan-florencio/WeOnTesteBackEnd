@@ -4,15 +4,21 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.io.IOException;
+
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
+
 import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
 import br.com.weon.testeconhecimentobackend.configuracao.YAMLConfig;
 
+@TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
 class ConfiguracaoTeste {
 	
 	File yaml = new File(this.getClass().getResource("/config.yaml").getFile());
 			
 	@Test
+	@Order(1)
 	void criaConfiguracao() {
 		try {
 			Configuracao.configurar(yaml.getAbsolutePath());
@@ -62,6 +68,18 @@ class ConfiguracaoTeste {
 	void verificaSeURLEstaDefinidaNaConfiguracaoDeDB() {
 		assertEquals("jdbc:h2:mem:test",Configuracao.obter().getDbConfig().get(0).getUrl(),
 				"A configuração não retornou a url!");
+	}
+	
+	@Test
+	void verificaSeHibernateDialectEstaDefinidoNaConfiguracaoDeDB() {
+		assertEquals("org.hibernate.dialect.H2Dialect",Configuracao.obter().getDbConfig().get(0).getHibernateDialect(),
+				"A configuração não retornou a configuração do hibernate dialect!");
+	}
+	
+	@Test
+	void verificaSeHbmToDdlEstaDefinidoNaConfiguracaoDeDB() {
+		assertEquals("create",Configuracao.obter().getDbConfig().get(0).getHibernateHbmToDDL(),
+				"A configuração não retornou a a configuração do hbm to ddl!");
 	}
 	
 	@Test
