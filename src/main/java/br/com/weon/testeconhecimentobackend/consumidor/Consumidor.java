@@ -17,14 +17,11 @@ public class Consumidor implements IConsumidor {
 	public void run() {
 		
 		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
-		while (true) {
-			
-			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout) {
-				break;
-			}
-			
+		
+		do {
 			consumir();
-		}
+			
+		} while (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout);
 		
 	}
 
@@ -35,8 +32,8 @@ public class Consumidor implements IConsumidor {
 		
 		if (canal != null) {
 			canal.acessar();
+			System.out.println("Removendo da base de dados: "+ canal);
 			Persistencia.singleton().remover(canal);
-			System.out.println("Removido: "+ canal);
 		}
 	}
 

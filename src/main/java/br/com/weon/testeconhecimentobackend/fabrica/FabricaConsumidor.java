@@ -20,13 +20,13 @@ public class FabricaConsumidor {
 	 * @return List<{@link IConsumidor} - Lista de consumidores
 	 * @throws InvalidParameterException - Lançada caso o parâmetro quantidade seja <= 0
 	 */
-	public static List<? extends IConsumidor> fabricarConsumidor(int quantidade) throws InvalidParameterException{
+	public static List<IConsumidor> fabricarConsumidor(int quantidade) throws InvalidParameterException{
 		if (quantidade <= 0) {
 			throw new InvalidParameterException("Não é possível criar "
 					+ quantidade+" instancias de IConsumidor");
 		}
 		
-		Supplier<Consumidor> consumidor = Consumidor::new;
+		Supplier<IConsumidor> consumidor = Consumidor::new;
 		
 		return Stream.generate(consumidor).limit(quantidade).toList();
 	}

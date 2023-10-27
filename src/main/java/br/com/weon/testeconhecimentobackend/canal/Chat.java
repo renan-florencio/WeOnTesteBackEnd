@@ -104,7 +104,8 @@ public class Chat implements ICanal {
 
 	@Override
 	public void acessar() {
-		System.out.println("Consumido: "+ this.getId() + " - " + this.getNomeUsuarioOrigem());
+		System.out.println("Objeto consumido: "+ this.getId() + "\n" 
+				+ LocalDateTime.now() + " - Origem: " + this.getNomeUsuarioOrigem());
 	}
 
 }
