@@ -2,7 +2,7 @@
 
 ###Teste de conhecimento back-end - v2.0
 
-O projeto é um monolito que instancias algumas threads de consumo e produção de mensagens. 
+O projeto é um monolito que instancia algumas threads de consumo e produção de objetos. 
 A mesma conta com a persistência das mensagens no banco de dados e adição em uma fila FIFO.
 A fila FIFO é consumida e o objeto presente nela removido do Banco de dados após o consumo do mesmo.
 
