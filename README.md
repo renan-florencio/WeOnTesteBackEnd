@@ -55,7 +55,7 @@ Após isso, a aplicação irá apontar para a config.yaml  presente em src/main/
 ###UML
 
 O projeto possui diagramas de classe, do projeto como um todo e também segregado por partes.
-Eles estão em dois formatos sendo .pdf e .txt com o código utilizado para gera-los através da plataforma através da plataforma [mermaid](url "https:\\mermaid.live") 
+Eles estão em dois formatos sendo .pdf e .txt com o código utilizado para gera-los através da plataforma através da plataforma <a href="https:\\mermaid.live" target="_blank">mermaid<a/>
 
 Os mesmos podem ser acessados em:
 https://github.com/renan-florencio/WeOnTesteBackEnd/tree/main/UML
