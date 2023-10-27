@@ -31,9 +31,12 @@ public class App {
 	 */
 	public static void main(String[] args) {
 		
-		String configPath = path.getPath()+
+		/*String configPath = path.getPath()+
 					packagePath.replace(".", "/")+
-					"/config.yaml";
+					"/config.yaml";*/
+		
+		String configPath = path.getPath()+"config/config.yaml";
+		
 		try {
 			Configuracao.configurar(configPath);
 		} catch (IOException e) {
