@@ -7,6 +7,7 @@ import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
+import jakarta.persistence.TypedQuery;
 
 /**
  * {@summary Persistencia}
@@ -42,11 +43,68 @@ public class Persistencia {
 		}
 	}
 	
+	
 	/**
-	 * Retornar a instancia do EntityManager para persistir os dados
-	 * @return EntityManager - entidade de persistência
+	 * Método para abrir transações
 	 */
-	public static synchronized EntityManager obter() {
-		return entityManager;
+	private static synchronized void abrirTransacao() {
+		entityManager.getTransaction().begin();;
 	}
+	
+	/**
+	 * Realiza o commit das transacoes
+	 */
+	private static synchronized void commitarTransacao() {
+		entityManager.getTransaction().commit();;
+	}
+	
+	/**
+	 * Método de persistencia de objeto
+	 * @param obj - Qualquer entidade que possa ser persistida na base
+	 */
+	public static synchronized void salvar(Object obj) {
+		abrirTransacao();
+		entityManager.persist(entityManager.contains(obj) ? obj : entityManager.merge(obj));
+		commitarTransacao();
+	}
+	
+	/**
+	 * Método de remoção de objeto da base
+	 * @param obj - Qualquer entidade que possa ser persistida na base
+	 */
+	public static synchronized void remover(Object obj) {
+		abrirTransacao();
+		entityManager.remove(entityManager.contains(obj) ? obj : entityManager.merge(obj));
+		commitarTransacao();
+	}
+	
+	/**
+	 * 
+	 * @param nome - Nome da consulta parametrizada na classe
+	 * @param classe - Classe referencia para query nomeada
+	 * @param <T>
+	 * @return TypedQuery 
+	 */
+	public static synchronized <T> TypedQuery<T> consultaNomeada(String nome, Class<T> classe) {
+		return entityManager.createNamedQuery(nome,classe);
+	}
+	
+	/**
+	 * 
+	 * @param query - Consulta a ser executada
+	 * @param classe - Classe referencia para query nomeada
+	 * @param <T>
+	 * @return TypedQuery 
+	 */
+	public static synchronized <T> TypedQuery<T> criarConsulta(String query, Class<T> classe) {
+		return entityManager.createQuery(query,classe);
+	}
+	
+	/**
+	 * Realiza o encerramento da conexao com o BD
+	 */
+	public static synchronized void fecharConexao() {
+		entityManager.close();
+	}
+
 }

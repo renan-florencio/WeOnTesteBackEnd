@@ -15,7 +15,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import br.com.weon.testeconhecimentobackend.canal.Voz;
 import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
 import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
@@ -23,7 +22,6 @@ class PersistenciaTestes {
 
 	File yaml = new File(this.getClass().getResource("/config.yaml").getFile());
 	Voz voz = new Voz(UUID.randomUUID(),"41 9 8888-8888","41 9 999-9999",LocalDateTime.now());
-	static EntityManager em;
 	
 	void criaConfiguracao() {
 		try {
@@ -39,18 +37,14 @@ class PersistenciaTestes {
 	void retornaInstanciaDeEntityManager() {
 		criaConfiguracao();
 		Persistencia.criar();
-		assertTrue(Persistencia.obter() instanceof EntityManager,"Não retornou uma instancia do EntityManager!");
-		em = Persistencia.obter();
 	}
 	
 	@Test
 	@Order(2)
 	void persisteEntidadeEmBaseDeDados() {
-		em.getTransaction().begin();
-		em.merge(voz);
-		em.getTransaction().commit();
+		Persistencia.salvar(voz);
 		
-		Voz dbVoz = em.createNamedQuery("obterVoz", Voz.class)
+		Voz dbVoz = Persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult();
 		
 		assertEquals(voz.getId(),dbVoz.getId(),"O ID obtido é diferente do esperado!");
@@ -69,11 +63,9 @@ class PersistenciaTestes {
 		voz.setTelefoneOrigem("11 1 1111-1111");
 		voz.setTelefoneDestino("22 2 2222-2222");
 
-		em.getTransaction().begin();
-		em.merge(voz);
-		em.getTransaction().commit();
+		Persistencia.salvar(voz);
 		
-		Voz dbVoz = em.createNamedQuery("obterVoz", Voz.class)
+		Voz dbVoz = Persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult();
 		
 		assertEquals("11 1 1111-1111",dbVoz.getTelefoneOrigem(),
@@ -86,17 +78,15 @@ class PersistenciaTestes {
 	@Order(4)
 	void removeObjetoDaBaseDeDados() {
 
-		em.getTransaction().begin();
-		em.remove(em.contains(voz) ? voz : em.merge(voz));
-		em.getTransaction().commit();
+		Persistencia.remover(voz);
 		
-		assertThrows(NoResultException.class,() -> em.createNamedQuery("obterVoz", Voz.class)
+		assertThrows(NoResultException.class,() -> Persistencia.consultaNomeada("obterVoz", Voz.class)
 				.setParameter("id",voz.getId()).getSingleResult(),
 				"O objeto não foi removido da base de dados!");
 	}
 	
 	@AfterAll
 	static void fechaConexao() {
-		em.close();
+		Persistencia.fecharConexao();
 	}
 }

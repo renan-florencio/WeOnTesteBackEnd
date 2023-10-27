@@ -13,8 +13,9 @@ import br.com.weon.testeconhecimentobackend.canal.ICanal;
 public class FilaDeObjetos {
 	
 	private static FilaDeObjetos INSTANCE;
-	private int objetosProduzidos = 0;
-	private int objetosConsumidos = 0;
+	private Integer objetosProduzidos = 0;
+	private Integer objetosConsumidos = 0;
+	private Integer tamanhoDaFila = 0;
 	private Queue<ICanal> fila = new LinkedList<ICanal>();
 	
 	
@@ -25,6 +26,7 @@ public class FilaDeObjetos {
 	public synchronized void adicionar(ICanal canal) {
 		fila.add(canal);
 		objetosProduzidos++;
+		tamanhoDaFila++;
 	}
 	
 	/**
@@ -37,6 +39,7 @@ public class FilaDeObjetos {
 		
 		if (canal != null) {
 			objetosConsumidos++;
+			tamanhoDaFila--;
 		}
 		
 		return canal;
@@ -48,7 +51,7 @@ public class FilaDeObjetos {
 	 * @return int - Tamanho da fila
 	 */
 	public synchronized int tamanho() {
-		return fila.size();
+		return tamanhoDaFila;
 	}
 	
 	/**

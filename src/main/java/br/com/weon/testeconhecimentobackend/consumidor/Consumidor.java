@@ -2,6 +2,7 @@ package br.com.weon.testeconhecimentobackend.consumidor;
 
 import br.com.weon.testeconhecimentobackend.canal.ICanal;
 import br.com.weon.testeconhecimentobackend.filadeobjetos.FilaDeObjetos;
+import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
 
 /**
  * {@summary Consumidor}
@@ -13,17 +14,26 @@ public class Consumidor implements IConsumidor {
 	
 	@Override
 	public void run() {
-		while (fila.tamanho() > 0 && fila.totalDeObjetosConsumidos() == 0) {
+		while (true) {
+			
+			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0) {
+				break;
+			}
+			
 			consumir();
 		}
+		
 	}
 
 	@Override
 	public void consumir() {
 		
 		ICanal canal = fila.obter();
-		canal.acessar();
-
+		
+		if (canal != null) {
+			canal.acessar();
+			Persistencia.remover(canal);
+		}
 	}
 
 }

@@ -15,7 +15,6 @@ import br.com.weon.testeconhecimentobackend.canal.Voz;
 import br.com.weon.testeconhecimentobackend.configuracao.Configuracao;
 import br.com.weon.testeconhecimentobackend.dao.VozDAOImpl;
 import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
-import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 
 @TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)
@@ -36,10 +35,9 @@ class VozDAOImplTestes {
 	
 	@Test
 	@Order(1)
-	void criaInstanciaDeEntityManager() {
+	void criaInstanciaDePersistencia() {
 		criaConfiguracao();
 		Persistencia.criar();
-		assertTrue(Persistencia.obter() instanceof EntityManager);
 		
 		dao = new VozDAOImpl();
 	}

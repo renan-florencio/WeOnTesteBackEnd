@@ -21,8 +21,8 @@ public class ProdutorChat implements IProdutor {
 	public void produzir() {
 		
 		Chat chat = new Chat("username"+numeroDoObjeto,"username_"+numeroDoObjeto,LocalDateTime.now());
-		fila.adicionar(chat);
 		dao.salvar(chat);
+		fila.adicionar(chat);
 		numeroDoObjeto ++;
 	}
 

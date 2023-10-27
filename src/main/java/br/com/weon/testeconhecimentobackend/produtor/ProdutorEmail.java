@@ -21,8 +21,8 @@ public class ProdutorEmail implements IProdutor {
 		
 		Email email = new Email("email"+numeroDoObjeto+"@email.com",
 				"email_"+numeroDoObjeto+"@email.com",LocalDateTime.now());
-		fila.adicionar(email);
 		dao.salvar(email);
+		fila.adicionar(email);
 		numeroDoObjeto++;
 
 	}

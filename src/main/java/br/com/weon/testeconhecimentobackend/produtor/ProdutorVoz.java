@@ -19,8 +19,8 @@ public class ProdutorVoz implements IProdutor {
 	@Override
 	public void produzir() {
 		Voz voz = new Voz("41 9 "+numeroDoObjeto,"11 9 "+numeroDoObjeto,LocalDateTime.now());
-		fila.adicionar(voz);
 		dao.salvar(voz);
+		fila.adicionar(voz);
 		numeroDoObjeto++;
 	}
 

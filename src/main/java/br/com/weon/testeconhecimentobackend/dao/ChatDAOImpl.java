@@ -5,39 +5,33 @@ import java.util.UUID;
 
 import br.com.weon.testeconhecimentobackend.canal.Chat;
 import br.com.weon.testeconhecimentobackend.persistencia.Persistencia;
-import jakarta.persistence.EntityManager;
 
 /**
  * {@summary ChatDAOImpl}
  * Implementação de interface DAO de chat
  */
 public class ChatDAOImpl implements IChatDAO {
-	EntityManager em = Persistencia.obter();
 	
 	@Override
-	public void salvar(Chat chat) {
-		em.getTransaction().begin();
-		em.persist(em.contains(chat)? chat : em.merge(chat));
-		em.getTransaction().commit();
+	public synchronized void salvar(Chat chat) {
+		Persistencia.salvar(chat);
 	}
 
 	@Override
-	public Chat obter(UUID id) {
-		return em.createNamedQuery("obterChat", Chat.class)
+	public synchronized Chat obter(UUID id) {
+		return Persistencia.consultaNomeada("obterChat", Chat.class)
 				.setParameter("id", id).getSingleResult();
 	}
 
 	@Override
-	public List<Chat> obterTodos() {
-		return em.createQuery("from Chat", Chat.class)
+	public synchronized List<Chat> obterTodos() {
+		return Persistencia.criarConsulta("from Chat", Chat.class)
 				.getResultList();
 	}
 
 	@Override
-	public void remover(Chat chat) {
-		em.getTransaction().begin();
-		em.remove(em.contains(chat)? chat : em.merge(chat));
-		em.getTransaction().commit();
+	public synchronized void remover(Chat chat) {
+		Persistencia.remover(chat);
 	}
 
 }
