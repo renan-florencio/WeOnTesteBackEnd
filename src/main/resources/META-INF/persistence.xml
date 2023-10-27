@@ -2,6 +2,9 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0">
     <persistence-unit name="ConexaoDB">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>br.com.weon.testeconhecimentobackend.canal.Chat</class>
+        <class>br.com.weon.testeconhecimentobackend.canal.Email</class>
+        <class>br.com.weon.testeconhecimentobackend.canal.Voice</class>
 
 	    <properties>
 	      <property name="hibernate.show_sql" value="false"/>
