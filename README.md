@@ -27,7 +27,15 @@ A fila FIFO é consumida e o objeto presente nela removido do Banco de dados ap�
 
 ###Configuração
 
-A configuração do projeto é realizada através do arquivo config.yaml
+A configuração do projeto é realizada através do arquivo config.yaml.
+
+Colocar a pasta config, presente na raiz do projeto, na mesma pasta que o .jar gerado com mvn package.
+
+Obs: Em caso de desenvolvimento alterar a classe App.
+* Descomentar linha 34-37
+* Comentar linha 39
+
+Após isso, a aplicação irá apontar para a config.yaml  presente em src/main/java/br/com/weon/testeconhecimento/backend
 
 `config.yaml`
 * consumidores: 2 - Numero de instancias do consumidor
@@ -37,7 +45,7 @@ A configuração do projeto é realizada através do arquivo config.yaml
 * produtores_timeout: 10 - Timeout de produção de objetos
 * DB: - Configuração de database
 * - driver: org.h2.Driver - Driver
-*   url: jdbc:h2:mem:test - String de conexão
+*   url: jdbc:h2:mem:test - String de conexão (o database deverá estar criado.)
 *   hibernate_dialect: org.hibernate.dialect.H2Dialect - hibernate dialect (Configuração do dialeto usado para criação dos comandos SQL)
 *   hibernate_hbm2ddl_auto: create-drop - Utilizado para definir como será o funcionamento dos ddl's na subida da aplicação
 *   usuario: sa - Usuário de acesso ao database
