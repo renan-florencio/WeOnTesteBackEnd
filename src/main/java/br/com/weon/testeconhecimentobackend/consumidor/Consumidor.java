@@ -18,10 +18,14 @@ public class Consumidor implements IConsumidor {
 		
 		Long timeout = System.currentTimeMillis() + Long.parseLong(Configuracao.obter().getProdutoresTimeout()) *1000;
 		
-		do {
+		while(true) {
+			
 			consumir();
 			
-		} while (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout);
+			if (fila.totalDeObjetosConsumidos() > 0 && fila.tamanho() == 0 && System.currentTimeMillis() > timeout){
+				break;
+			}
+		}
 		
 	}
 
