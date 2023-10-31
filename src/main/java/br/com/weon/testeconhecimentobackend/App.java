@@ -52,7 +52,7 @@ public class App {
 		int instanciasVoz = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
 		int instanciasEmail = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
 		int instanciasChat = Integer.parseInt(Configuracao.obter().getProdutoresVoz());
-		int instanciasConsumidor = Integer.parseInt(Configuracao.obter().getProdutoresVoz()); 
+		int instanciasConsumidor = Integer.parseInt(Configuracao.obter().getConsumidores()); 
 		
 		List<? extends IProdutor> voz = FabricaProdutor.fabricarProdutor(Canal.VOZ, instanciasVoz);
 		
